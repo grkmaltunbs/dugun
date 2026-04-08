@@ -200,9 +200,18 @@ async function handleRsvpSubmit(e) {
     btn.textContent = "Gönderildi ✓";
     localStorage.setItem("rsvp_sent", phone);
   } catch (err) {
-    console.error(err);
+    console.error("RSVP hatası:", err);
     msgBox.className = "rsvp-msg error";
-    msgBox.textContent = "Bir hata oluştu. Lütfen tekrar deneyin.";
+    // Hatayı ayrıntılı göster - teşhis için
+    let detail = err?.code || err?.message || "bilinmeyen hata";
+    if (err?.code === "permission-denied") {
+      detail = "İzin reddedildi — Firestore Rules yapıştırılmamış olabilir";
+    } else if (err?.code === "unavailable") {
+      detail = "Firestore bağlantısı kurulamadı — internet/konfigürasyon";
+    } else if (err?.code === "not-found") {
+      detail = "Firestore veritabanı bulunamadı — Firebase'de oluşturulmamış";
+    }
+    msgBox.textContent = "Hata: " + detail;
     btn.disabled = false;
     btn.textContent = "Gönder";
   }
