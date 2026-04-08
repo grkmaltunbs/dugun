@@ -1,0 +1,37 @@
+rules_version = '2';
+// ============================================================
+// FIRESTORE SECURITY RULES
+// Firebase Console > Firestore Database > Rules bölümüne yapıştırın
+// ============================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /rsvps/{phone} {
+
+      // Herkes okuyamaz (gizlilik). Sadece giriş yapmış admin.
+      allow read: if request.auth != null;
+
+      // Herkes yeni kayıt oluşturabilir, AMA:
+      //  - dokümanın ID'si telefon numarası olmalı
+      //  - aynı telefonla ikinci kez kayıt ATILAMAZ (create = mevcut yoksa)
+      //  - zorunlu alanlar doğru tipte olmalı
+      //  - isim max 60 karakter, not max 300 karakter
+      allow create: if
+        phone.matches('^[0-9]{10,15}$') &&
+        request.resource.data.keys().hasAll(['name','phone','attending','guestCount','side','createdAt']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.name.size() <= 60 &&
+        request.resource.data.phone == phone &&
+        request.resource.data.attending in ['evet', 'hayir'] &&
+        request.resource.data.guestCount is int &&
+        request.resource.data.guestCount >= 0 &&
+        request.resource.data.guestCount <= 10 &&
+        request.resource.data.side in ['gelin', 'damat', 'ortak'] &&
+        (!('note' in request.resource.data) || request.resource.data.note.size() <= 300);
+
+      // Update/delete sadece admin (giriş yapmış kullanıcı)
+      allow update, delete: if request.auth != null;
+    }
+  }
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Düğün Davetiyesi</title>
+  <meta name="description" content="Düğün davetimize hoş geldiniz" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- KAHRAMAN / HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-pre">Sizi düğünümüze davet ediyoruz</p>
+      <h1 id="heroNames">— & —</h1>
+      <p class="hero-date" id="heroDate"></p>
+      <a href="#rsvp" class="btn btn-primary">Katılımınızı Bildirin</a>
+    </div>
+    <div class="scroll-down">↓</div>
+  </section>
+
+  <!-- AİLELER -->
+  <section class="section families">
+    <h2 class="section-title">Aileleri</h2>
+    <div class="families-grid">
+      <div class="family-card">
+        <p class="family-label">Gelin Tarafı</p>
+        <p class="family-name" id="brideFamily"></p>
+        <p class="family-parents" id="brideParents"></p>
+      </div>
+      <div class="family-heart">♥</div>
+      <div class="family-card">
+        <p class="family-label">Damat Tarafı</p>
+        <p class="family-name" id="groomFamily"></p>
+        <p class="family-parents" id="groomParents"></p>
+      </div>
+    </div>
+    <p class="welcome-msg" id="welcomeMessage"></p>
+  </section>
+
+  <!-- GERİ SAYIM -->
+  <section class="section countdown-section">
+    <h2 class="section-title">Büyük Güne Kalan Süre</h2>
+    <div class="countdown" id="countdown">
+      <div class="cd-box"><span id="cd-days">00</span><small>Gün</small></div>
+      <div class="cd-box"><span id="cd-hours">00</span><small>Saat</small></div>
+      <div class="cd-box"><span id="cd-mins">00</span><small>Dakika</small></div>
+      <div class="cd-box"><span id="cd-secs">00</span><small>Saniye</small></div>
+    </div>
+  </section>
+
+  <!-- HİKAYE -->
+  <section class="section story-section">
+    <h2 class="section-title">Hikâyemiz</h2>
+    <p class="story-text" id="storyText"></p>
+  </section>
+
+  <!-- GALERİ -->
+  <section class="section gallery-section">
+    <h2 class="section-title">Fotoğraflarımız</h2>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- MEKAN & HARİTA -->
+  <section class="section venue-section">
+    <h2 class="section-title">Mekan</h2>
+    <p class="venue-name" id="venueName"></p>
+    <p class="venue-address" id="venueAddress"></p>
+    <p class="venue-datetime">
+      <span id="venueDate"></span> • <span id="venueTime"></span>
+    </p>
+    <div class="map-wrapper">
+      <iframe id="mapFrame" src="" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <a id="mapLink" href="#" target="_blank" class="btn btn-outline">Google Maps'te Aç</a>
+  </section>
+
+  <!-- RSVP -->
+  <section class="section rsvp-section" id="rsvp">
+    <h2 class="section-title">Katılım Formu</h2>
+    <p class="rsvp-desc">Lütfen katılım durumunuzu bildirin. Her telefon numarasıyla sadece bir kez cevap verilebilir.</p>
+
+    <form id="rsvpForm" class="rsvp-form">
+      <div class="form-row">
+        <label>Ad Soyad *</label>
+        <input type="text" id="guestName" required maxlength="60" placeholder="Adınız Soyadınız" />
+      </div>
+
+      <div class="form-row">
+        <label>Telefon Numarası *</label>
+        <input type="tel" id="guestPhone" required placeholder="05XX XXX XX XX" pattern="[0-9\s]{10,15}" />
+        <small>Sadece rakam girin. Doğrulama için kullanılacak.</small>
+      </div>
+
+      <div class="form-row">
+        <label>Katılım Durumu *</label>
+        <div class="radio-group">
+          <label class="radio-card">
+            <input type="radio" name="attending" value="evet" required />
+            <span>✓ Katılacağım</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="attending" value="hayir" />
+            <span>✗ Katılamayacağım</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row" id="guestCountRow">
+        <label>Kaç kişi katılacaksınız? *</label>
+        <select id="guestCount">
+          <option value="1">1 kişi</option>
+          <option value="2">2 kişi</option>
+          <option value="3">3 kişi</option>
+          <option value="4">4 kişi</option>
+          <option value="5">5 kişi</option>
+          <option value="6">6 kişi</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Hangi taraftansınız?</label>
+        <select id="guestSide">
+          <option value="gelin">Gelin Tarafı</option>
+          <option value="damat">Damat Tarafı</option>
+          <option value="ortak">Her İkisi</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Not / Mesaj (Opsiyonel)</label>
+        <textarea id="guestNote" rows="3" maxlength="300" placeholder="Çiftlere mesajınız..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary" id="rsvpSubmit">Gönder</button>
+      <div id="rsvpMessage" class="rsvp-msg"></div>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p id="footerNames">— & —</p>
+    <p class="footer-date" id="footerDate"></p>
+    <p class="footer-small">Bizi en güzel gününüzde yalnız bırakmayın ♥</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox hidden" onclick="this.classList.add('hidden')">
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <!-- Firebase SDK (compat mode - basit) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
